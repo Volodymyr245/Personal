@@ -2099,12 +2099,12 @@ var MORPH_MAPS=[["data:image/webp;base64,UklGRtYjAABXRUJQVlA4IMojAADwswCdASrgAfM
   function bdInit(){ var bin=atob(BD_B64), n=bin.length>>2; BDV=new Uint32Array(n); for(var i=0;i<n;i++){ var o=i<<2; BDV[i]=((bin.charCodeAt(o)<<24)>>>0)+(bin.charCodeAt(o+1)<<16)+(bin.charCodeAt(o+2)<<8)+bin.charCodeAt(o+3); }
     // play the clip in the other direction, and keep only the longest-lived ~60% of birds (lighter flock)
     var occ=[]; for(var s0=0;s0<BM;s0++){ var c0=0; for(var f0=0;f0<BF;f0++) if(BDV[s0*BF+f0]) c0++; occ.push([c0,s0]); }
-    occ.sort(function(a,b){ return b[0]-a[0]; }); var KEEP=Math.round(BM*.2), R=new Uint32Array(KEEP*BF);
+    occ.sort(function(a,b){ return b[0]-a[0]; }); var KEEP=Math.round(BM*.11), R=new Uint32Array(KEEP*BF);
     for(var s1=0;s1<KEEP;s1++){ var so=occ[s1][1]; for(var f1=0;f1<BF;f1++) R[s1*BF+f1]=BDV[so*BF+(BF-1-f1)]; }
     BDV=R; BM=KEEP;
     BST=[]; for(var s=0;s<BM;s++){ var ms=0,mc=0; for(var f2=0;f2<BF;f2++){ var v2=BDV[s*BF+f2]; if(v2){ ms+=(v2>>>6)&63; mc++; } }
       var gg=(Math.random()+Math.random()+Math.random()-1.5)*1.15, zz=Math.random(); // depth: nearer birds are bigger and faster
-      BST.push({x:.5,y:.5,sp:0,hx:1,hy:0,pr:0,om:7+Math.random()*3.5,ph:Math.random()*6.283,off:(s*.618034%1)*BF,o:(s*.618034+.13*Math.random())%1,T:(19-9*zz)*(.85+.3*Math.random()),zs:.55+1.0*zz*zz+.15*Math.random(),g:gg,ms:mc?ms/mc:12,wx:0,wy:0}); } }
+      BST.push({x:.5,y:.5,sp:0,hx:1,hy:0,pr:0,om:7+Math.random()*3.5,ph:Math.random()*6.283,off:(s*.618034%1)*BF,o:(s*.618034+.13*Math.random())%1,T:(19-9*zz)*(.85+.3*Math.random()),zs:.55+1.0*zz*zz+.15*Math.random(),z:zz,g:gg,ms:mc?ms/mc:12,wx:0,wy:0}); } }
   function bdAt(s,f){ f=((f%BF)+BF)%BF; var v=BDV[s*BF+f]; if(!v) return null; return [(v>>>22)/1023*960,((v>>>12)&1023)/1023*440,(v>>>6)&63,v&63]; }
   // flock stream: birds fly from below the viewport (bottom-left) out past the top-right edge and are simply cut off.
   // each bird is one tracked bird from the clip: its size, wing-beat jitter and the small swerves of its real path ride on top of the stream.
@@ -2132,8 +2132,8 @@ var MORPH_MAPS=[["data:image/webp;base64,UklGRtYjAABXRUJQVlA4IMojAADwswCdASrgAfM
     for(var s=0;s<BM;s++) for(var k=0;k<K;k++){ var wing=Math.random()<.72, a=Math.random()*2-1, c=Math.random()*2-1;
       if(wing) a=(a<0?-1:1)*Math.pow(Math.abs(a),.8); out.push([.5,.5,1,0,s,wing?0:1,a,c,Math.random()]); }
     // a few faint clouds drifting slowly behind the flock
-    var CN=Math.round(N*.24), CL=[]; for(var ci=0;ci<7;ci++){ var cw=150+Math.random()*170, puffs=[]; for(var pf=0;pf<5;pf++) puffs.push([(Math.random()-.5)*cw*1.3,(Math.random()-.5)*cw*.16,cw*(.3+Math.random()*.25),cw*(.14+Math.random()*.09)]);
-      CL.push({x:-400+ci/7*1650+Math.random()*120,y:-200+Math.random()*820,p:puffs,v:5+Math.random()*7,l:Math.random()}); }
+    var CN=Math.round(N*.24), CL=[]; for(var ci=0;ci<7;ci++){ var cz=Math.random(), cw=(150+Math.random()*170)*(.7+.75*cz), puffs=[]; for(var pf=0;pf<5;pf++) puffs.push([(Math.random()-.5)*cw*1.3,(Math.random()-.5)*cw*.16,cw*(.3+Math.random()*.25),cw*(.14+Math.random()*.09)]);
+      CL.push({x:-400+ci/7*1650+Math.random()*120,y:-200+Math.random()*820,p:puffs,v:3+11*cz*cz+Math.random()*2,l:Math.random(),z:cz,hh:cw*.25}); }
     for(var cq=0;cq<CN;cq++){ var C=CL[cq%CL.length], P=C.p[(Math.random()*C.p.length)|0], ra=Math.sqrt(Math.random()), an=Math.random()*6.283, ox=P[0]+Math.cos(an)*ra*P[2], oy=P[1]+Math.sin(an)*ra*P[3];
       out.push([0,0,1,0,-2,cq%CL.length,ox,oy,(1-ra*ra)*(.55+.45*Math.random()),Math.random()*6.283]); }
     for(var z=out.length-1;z>0;z--){ var r2=(Math.random()*(z+1))|0, tmp=out[z]; out[z]=out[r2]; out[r2]=tmp; }
@@ -2144,10 +2144,13 @@ var MORPH_MAPS=[["data:image/webp;base64,UklGRtYjAABXRUJQVlA4IMojAADwswCdASrgAfM
   function sstepB(a,b,x){ x=Math.max(0,Math.min(1,(x-a)/(b-a))); return x*x*(3-2*x); }
   function teamMove(tg,t){
     if(tg[4]===-2){ var C=BCL[tg[5]], W=1650, cx=((C.x+400+t*C.v)%W+W)%W-400, wob=Math.sin(t*.25+tg[9])*4;
-      return [(cx+tg[6]+wob)/960,(C.y+tg[7]+Math.cos(t*.2+tg[9])*2.5)/440,.25+.6*tg[8]]; }
+      // billow: the cloud slowly breathes and its puffs churn, so it reads as volume rather than a flat stamp
+      var br=1+.07*Math.sin(t*.21+C.l*6.3)+.04*Math.sin(t*.53+tg[9]), ny=Math.max(-1,Math.min(1,tg[7]/C.hh));
+      var lit=.7-.45*ny+.08*Math.sin(t*.4+tg[9]); // lit from above: bright crown, dim belly
+      return [(cx+tg[6]*br+wob)/960,(C.y+tg[7]*br+Math.cos(t*.2+tg[9])*2.5)/440,Math.min(1,(.32+.75*tg[8])*lit),.62+.38*C.z,.08+.55*C.z*C.z]; }
     bdState(t); var S=BST[tg[4]];
-    if(S.pr<=tg[8]*.999) return [S.x/960,S.y/440,-1];
-    var span=Math.max(12,S.sp*4.3*S.zs), a=tg[6], c=tg[7], X, Y;
+    if(S.pr<=tg[8]*.999) return [S.x/960,S.y/440,-1,1,0];
+    var span=Math.max(16,S.sp*6.8*S.zs), a=tg[6], c=tg[7], X, Y;
     // wing-beat: quick downstroke (~40% of the cycle), slower upstroke; flapping comes in bursts between glides
     var cyc=((t*S.om+S.ph)/6.2832)%1, phi=cyc<.42?cyc/.42*3.1416:3.1416+(cyc-.42)/.58*3.1416;
     var env=.22+.78*sstepB(-.35,.45,Math.sin(t*.31+S.ph*1.7));
@@ -2165,7 +2168,10 @@ var MORPH_MAPS=[["data:image/webp;base64,UklGRtYjAABXRUJQVlA4IMojAADwswCdASrgAfM
       X=sg*xr; Y=-.17*span*Math.pow(aa,1.25)+yp-yb+c*ch*.5+(aa<.25?.02*span:0); }
     else { var bw=span*.045*(1-a*a*.6), tailFan=a<-.6?1.8+.35*env*Math.sin(phi*2):1; X=c*bw*tailFan; Y=a*span*.2+(a<-.6?-.012*span*env*Math.cos(phi):0); }
     var px=S.x+X*S.hy-Y*S.hx, py=S.y-X*S.hx-Y*S.hy;
-    return [px/960,py/440,(.5+.5*Math.min(1,span/60))];
+    // light: a raised wing shows its lit upper side, a lowered one goes into shadow, so every beat flickers like real feathers
+    var lt=tg[5]===0?.72+.5*Math.max(-.4,Math.sin(th))*(.4+.6*Math.abs(a)):.95;
+    var z=S.z, df=.28+.72*Math.pow(z,.85), bz=z<.5?(.5-z)*.9:(z>.78?(z-.78)*2.6:0);
+    return [px/960,py/440,(.5+.5*Math.min(1,span/60))*lt,df,bz];
   }
 
   // brain: pseudo-3D turntable from the side-view image
@@ -2338,10 +2344,10 @@ var MORPH_MAPS=[["data:image/webp;base64,UklGRtYjAABXRUJQVlA4IMojAADwswCdASrgAfM
       if(SV>0.0005){
         var sa2=Math.max(0,Math.min(1,(stF-p.d*.1)/.85));
         var ax=X, ay=Y, aa=a, ar=r;
-        if(stA>0){ var tA=MT[stA-1][i], fA=Math.min(IW/MA[stA-1],IH), wA=fA*MA[stA-1]; if(stA===1){ var mA=teamMove(tA,t); tA=[mA[0],mA[1],tA[2]<0?tA[2]:Math.min(1,tA[2]*mA[2])]; } var dfA=1; if(stA===2){ var bA=brainMove(tA,t,MA[1]); tA=bA; dfA=bA[3]; } if(stA===3){ var lA=ladderMove(tA,t); tA=lA; dfA=lA[3]; } ax=cx+(tA[0]-.5)*wA+Math.sin(t*.7+p.tw)*dpr*.9; ay=cy+(tA[1]-.5)*fA+Math.cos(t*.6+p.tw)*dpr*.9; aa=tA[2]<0?0:(.16+.84*Math.pow(tA[2],.9))*(.75+.25*p.s)*dfA; if(stA===3&&MT[2][i][3]>=1){ aa=dfA; ar=(MT[2][i][3]===2?1.9:1.25)*dpr*k; } ar=(2.1+Math.max(0,tA[2])*2.4)*dpr*k*(stA===2?.6:1); }
+        if(stA>0){ var tA=MT[stA-1][i], fA=Math.min(IW/MA[stA-1],IH), wA=fA*MA[stA-1]; var mA=null; if(stA===1){ mA=teamMove(tA,t); tA=[mA[0],mA[1],tA[2]<0?tA[2]:Math.min(1,tA[2]*mA[2])]; } var dfA=1, bzA=0; if(mA){ dfA=mA[3]; bzA=mA[4]; } if(stA===2){ var bA=brainMove(tA,t,MA[1]); tA=bA; dfA=bA[3]; } if(stA===3){ var lA=ladderMove(tA,t); tA=lA; dfA=lA[3]; } ax=cx+(tA[0]-.5)*wA+Math.sin(t*.7+p.tw)*dpr*.9; ay=cy+(tA[1]-.5)*fA+Math.cos(t*.6+p.tw)*dpr*.9; aa=tA[2]<0?0:(.16+.84*Math.pow(tA[2],.9))*(.75+.25*p.s)*dfA; if(stA===3&&MT[2][i][3]>=1){ aa=dfA; ar=(MT[2][i][3]===2?1.9:1.25)*dpr*k; } ar=(2.1+Math.max(0,tA[2])*2.4)*dpr*k*(stA===2?.6:1); if(mA){ ar*=(mA[4]===undefined?1:.7)*(.62+.38*dfA)*(1+bzA); aa/=1+bzA*1.5; } }
         if(sa2<=0){ X=ax; Y=ay; a=aa; r=ar; }
-        else { var tB=MT[stA][i], fB=Math.min(IW/MA[stA],IH), wB=fB*MA[stA]; if(stA===0){ var mB=teamMove(tB,t); tB=[mB[0],mB[1],tB[2]<0?tB[2]:Math.min(1,tB[2]*mB[2])]; } var dfB=1; if(stA===1){ var bB=brainMove(tB,t,MA[1]); tB=bB; dfB=bB[3]; } if(stA===2){ var lB=ladderMove(tB,t); tB=lB; dfB=lB[3]; }
-          var bx=cx+(tB[0]-.5)*wB+Math.sin(t*.7+p.tw)*dpr*.9, by=cy+(tB[1]-.5)*fB+Math.cos(t*.6+p.tw)*dpr*.9, ba=tB[2]<0?0:(.16+.84*Math.pow(tB[2],.9))*(.75+.25*p.s)*dfB, br=(2.1+Math.max(0,tB[2])*2.4)*dpr*k*(stA===1?.6:1);
+        else { var tB=MT[stA][i], fB=Math.min(IW/MA[stA],IH), wB=fB*MA[stA]; var mB=null; if(stA===0){ mB=teamMove(tB,t); tB=[mB[0],mB[1],tB[2]<0?tB[2]:Math.min(1,tB[2]*mB[2])]; } var dfB=1, bzB=0; if(mB){ dfB=mB[3]; bzB=mB[4]; } if(stA===1){ var bB=brainMove(tB,t,MA[1]); tB=bB; dfB=bB[3]; } if(stA===2){ var lB=ladderMove(tB,t); tB=lB; dfB=lB[3]; }
+          var bx=cx+(tB[0]-.5)*wB+Math.sin(t*.7+p.tw)*dpr*.9, by=cy+(tB[1]-.5)*fB+Math.cos(t*.6+p.tw)*dpr*.9, ba=tB[2]<0?0:(.16+.84*Math.pow(tB[2],.9))*(.75+.25*p.s)*dfB, br=(2.1+Math.max(0,tB[2])*2.4)*dpr*k*(stA===1?.6:1); if(mB){ br*=(.7)*(.62+.38*dfB)*(1+bzB); ba/=1+bzB*1.5; }
           var sw3=t*.05+sa2*2.2, c3=Math.cos(sw3), s3=Math.sin(sw3), dxs=cx+(p.sx*c3-p.sy*s3)*rad*1.25, dys=cy+(p.sx*s3+p.sy*c3)*rad*1.05, da=(.2+.3*p.s), dr0=(1.5+p.s*1.4)*dpr*k;
           if(sa2<.5){ var h1=sa2*2; h1=h1*h1*(3-2*h1); X=ax+(dxs-ax)*h1; Y=ay+(dys-ay)*h1; a=aa+(da-aa)*h1; r=ar+(dr0-ar)*h1; }
           else { var h2=(sa2-.5)*2; h2=h2*h2*(3-2*h2); X=dxs+(bx-dxs)*h2; Y=dys+(by-dys)*h2; a=da+(ba-da)*h2; r=dr0+(br-dr0)*h2; }
