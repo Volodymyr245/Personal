@@ -2281,8 +2281,16 @@ var MORPH_MAPS=[["data:image/webp;base64,UklGRtYjAABXRUJQVlA4IMojAADwswCdASrgAfM
       var u=x0+t*sp+dx; u=((u+.12)%1.24+1.24)%1.24-.12;
       var e=Math.max(0,Math.min(1,Math.min(u+.04,1.04-u)/.16)); e=e*e*(3-2*e);
       var br=Math.max(0,Math.min(1,tg[2]*(.9+.12*Math.sin(wx*6-t*.16+wy*5))*(lay===0?.75:1)));
-      var gx=(u*GX)|0, gy=((y0+dy)*GY)|0; if(gx>=0&&gx<GX&&gy>=0&&gy<GY) CLG[gy*GX+gx]+=br*e;
-      return [u,y0+dy,br,e]; }
+      var gx=(u*GX)|0, gy=((y0+dy)*GY)|0, ok=gx>=0&&gx<GX&&gy>=0&&gy<GY; if(ok) CLG[gy*GX+gx]+=br*e;
+      // volume: light comes from above, so density stacked above a point shades it (self-shadow); thin rims stay bright
+      var sh=0, here=0, wgt=1; if(ok){ here=CLP[gy*GX+gx]; for(var k=1;k<=6&&gy-k>=0;k++){ var cxk=gx+(k>>1); if(cxk<GX) sh+=CLP[(gy-k)*GX+cxk]*wgt; wgt*=.82; } }
+      var T=Math.exp(-sh*.038), rim=Math.max(0,1-here/9);
+      // small billows inside each cloud: a lumpy noise lit from the upper left
+      var bl=Math.sin(x0*38+y0*9)*Math.cos(y0*44-x0*7)+.5*Math.sin(x0*71-y0*63);
+      var lit=Math.max(.3,Math.min(1.3,.42+.78*T+.16*rim+.12*bl*T));
+      var dep=[.72,.9,1.08][lay];
+      br=Math.max(0,Math.min(1,br*lit*dep));
+      return [u,y0+dy,br,e*(lay===0?.8:1)]; }
     if(ty===1){ var cx_=(tg[0]*GX)|0, cy_=(tg[1]*GY)|0, acc=0, nn=0; for(var oy=-1;oy<=1;oy++) for(var ox=-1;ox<=1;ox++){ var xx=cx_+ox, yy=cy_+oy; if(xx>=0&&xx<GX&&yy>=0&&yy<GY){ acc+=CLP[yy*GX+xx]*(ox===0&&oy===0?2:1); nn+=(ox===0&&oy===0?2:1); } }
       var occ=Math.max(0,Math.min(1,(acc/(nn||1)-2.5)/7)); occ=occ*occ*(3-2*occ); var hz=Math.max(0,Math.min(1,(tg[1]-.02)/.5)); hz=hz*hz*(3-2*hz); var hs=Math.sin(tg[0]*12.9898e3+tg[1]*78.233e3)*43758.5453; hs-=Math.floor(hs); var hs2=Math.sin(tg[0]*39.346e3+tg[1]*11.135e3)*24634.6345; hs2-=Math.floor(hs2); return [tg[0],tg[1],tg[2],(hs<.03+.97*hz && hs2>=occ*.97)?1:0]; }
     var bob=Math.sin(t*1.1)*.0015;
