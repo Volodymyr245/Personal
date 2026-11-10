@@ -100,6 +100,8 @@ button{font:inherit}
 .links a.solid{display:inline-flex;align-items:center;min-height:38px;padding:0 14px;border:2px solid var(--gold);color:var(--gold);text-decoration:none;font-family:'Silkscreen',monospace;font-size:13px}
 
 @media (max-width:640px){.bar{padding:10px 16px;gap:10px 12px}.who{width:100%}.who>div{min-width:0}.who b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.who span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.switch{width:100%}.switch button{flex:1;justify-content:center}.links{width:100%;justify-content:space-between;gap:10px}}
+.links .ic{display:none}
+@media (max-width:640px){.bar .who{width:auto;flex:1 1 auto;order:1}.bar .links{order:2;gap:8px;width:auto;justify-content:flex-end}.bar .switch{order:3}.links .t{display:none}.links .ic{display:block}.links a,.links a.solid{display:inline-flex;align-items:center;justify-content:center;width:38px;min-height:38px;padding:0;border:2px solid var(--gold);color:var(--gold);text-decoration:none}.links .in{font-family:'Silkscreen',monospace;font-size:14px;line-height:1}}
 #play{display:flex;flex-direction:column;align-items:center;background:#0c0718}
 .viewport{position:relative;width:100%;overflow:hidden;background:#0c0718}
 #stage{position:absolute;left:0;top:0;width:1440px;height:810px;transform-origin:0 0;overflow:hidden}
@@ -432,7 +434,7 @@ button{font:inherit}
     <button type="button" class="p" id="toPlay" aria-pressed="true"><svg width="10" height="12" viewBox="0 0 5 6" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="0" width="2" height="6" fill="currentColor"/><rect x="2" y="1" width="2" height="4" fill="currentColor"/><rect x="4" y="2" width="1" height="2" fill="currentColor"/></svg>Play</button>
     <button type="button" class="b" id="toBoring" aria-pressed="false">Case studies</button>
   </div>
-  <nav class="links"><a href="mailto:diachokvol@gmail.com">Email</a><a href="Volodymyr_Diachok_CV.pdf" download data-cv>Download CV</a><a class="solid" href="https://www.linkedin.com/in/volodymyr-diachok-13128a2b/" target="_blank" rel="noopener">LinkedIn</a></nav>
+  <nav class="links"><a href="mailto:diachokvol@gmail.com" aria-label="Email"><svg class="ic" width="18" height="14" viewBox="0 0 9 7" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M0 0h9v1H0zM0 6h9v1H0zM0 1h1v5H0zM8 1h1v5H8zM1 1h1v1H1zM7 1h1v1H7zM2 2h1v1H2zM6 2h1v1H6zM3 3h3v1H3z"/></svg><span class="t">Email</span></a><a href="Volodymyr_Diachok_CV.pdf" download data-cv aria-label="Download CV"><svg class="ic" width="16" height="16" viewBox="0 0 8 8" shape-rendering="crispEdges" aria-hidden="true"><path fill="currentColor" d="M3 0h2v4H3zM1 3h1v1H1zM6 3h1v1H6zM2 4h1v1H2zM5 4h1v1H5zM3 4h2v2H3zM0 7h8v1H0zM0 6h1v1H0zM7 6h1v1H7z"/></svg><span class="t">Download CV</span></a><a class="solid" href="https://www.linkedin.com/in/volodymyr-diachok-13128a2b/" target="_blank" rel="noopener" aria-label="LinkedIn"><span class="ic in" aria-hidden="true">in</span><span class="t">LinkedIn</span></a></nav>
 </header>
 
 <a href="#boring" class="skiplink" onclick="setMode(true);return false">Skip to case studies</a>
