@@ -179,6 +179,7 @@ main,header,footer{position:relative;z-index:1}
 .globe-sec .wrap{position:relative;width:100%;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);align-items:center;gap:20px}
 .nums{display:flex;flex-direction:column;gap:clamp(26px,5vh,56px);position:relative;z-index:2}
 .num{display:flex;flex-direction:column;gap:6px}
+.skip-works{align-self:flex-start;margin-top:clamp(4px,1vh,12px)}
 .num b{font-family:var(--f-display);font-stretch:125%;font-weight:700;font-size:clamp(46px,6.2vw,92px);line-height:.95;letter-spacing:0;font-variant-numeric:tabular-nums;color:transparent;-webkit-text-stroke:.6px rgba(236,231,220,.3);transition:-webkit-text-stroke-color .8s,color .8s}
 .num b small{font-size:.5em;margin-left:2px;-webkit-text-stroke:inherit}
 .num span{font-family:var(--f-display);font-stretch:125%;font-weight:700;font-size:clamp(15px,1.7vw,24px);letter-spacing:.05em;text-transform:uppercase;color:transparent;-webkit-text-stroke:.25px rgba(236,231,220,.34);max-width:26ch}
@@ -1268,6 +1269,7 @@ body.in-case #grain{opacity:.16}
         <div class="num"><b data-to="12">12</b><span>People design team</span></div>
         <div class="num"><b data-to="100">100<small>%</small></b><span>AI native</span></div>
         <div class="num"><b data-to="50">50<small>+</small></b><span>Projects delivered</span></div>
+        <a class="btn skip-works" href="#work">Skip to works<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
       </div>
       <canvas id="globe" aria-hidden="true"></canvas>
     </div>
@@ -2028,6 +2030,9 @@ function nextArrow(btn){
   requestAnimationFrame(frame);
   arrowStop=function(){ run=false; io.disconnect(); cv.remove(); };
 }
+
+/* skip the stats scenes and land on the works list */
+document.querySelector(".skip-works").addEventListener("click",function(e){ e.preventDefault(); var w=document.querySelector("#work h2")||document.getElementById("work"); window.scrollTo({top:w.getBoundingClientRect().top+scrollY-32,behavior:"instant"}); });
 
 /* ---------- loader (waits for the password gate) ---------- */
 (function(){ function run(){
