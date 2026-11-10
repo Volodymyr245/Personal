@@ -1382,6 +1382,15 @@ WORK.forEach(function(w){
   b.addEventListener("click", function(){ openCase(w, b); });
   works.appendChild(b);
 });
+/* last card: the playable pixel-art version of this portfolio, hosted at /game/ */
+(function(){
+  var g=document.createElement("a");
+  g.className="card"; g.href="game/";
+  g.setAttribute("aria-label","Portfolio Run: play the game version of this portfolio");
+  g.innerHTML='<div class="ph" style="--bgc:#140c2a;--pos:center"><img loading="lazy" src="img/cover_game.webp" alt=""></div>'+
+    '<div class="tags">Playable portfolio · Pixel platformer · <span class="yr">2026</span></div><h3>Portfolio Run</h3>';
+  works.appendChild(g);
+})();
 
 
 
