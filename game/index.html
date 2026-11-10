@@ -40,7 +40,7 @@ html{background:#140c2a}
   <p class="who">Volodymyr Diachok · Experience Design Lead &amp; Product Owner</p>
   <div class="bar" id="ld-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class="stat"><span id="ld-msg">Booting the AI factory</span><span id="ld-pct">0%</span></div>
-  <div class="quick"><span>In a hurry?</span><a href="mailto:diachokvol@gmail.com">Email</a><a href="https://www.linkedin.com/in/volodymyr-diachok-13128a2b/" target="_blank" rel="noopener">LinkedIn</a><a href="Volodymyr_Diachok_CV.pdf" download>Download CV</a><button type="button" id="ld-cs" aria-pressed="false">Open case studies when ready</button></div>
+  <div class="quick"><span>In a hurry?</span><a href="../">Back to portfolio</a><a href="mailto:diachokvol@gmail.com">Email</a><a href="https://www.linkedin.com/in/volodymyr-diachok-13128a2b/" target="_blank" rel="noopener">LinkedIn</a><a href="Volodymyr_Diachok_CV.pdf" download>Download CV</a><button type="button" id="ld-cs" aria-pressed="false">Open case studies when ready</button></div>
   <div class="tip">← → run · Space jump · C stats</div>
 </div>
 <script>
@@ -95,6 +95,7 @@ button{font:inherit}
 .switch .b{font-size:14px;font-weight:500}
 .links{display:flex;align-items:center;gap:16px}
 .links a{color:var(--cream);font-size:14px;font-weight:500;text-underline-offset:3px}
+.links a.home{padding-right:16px;border-right:1px solid rgba(255,244,220,.25)}
 .links a.solid{display:inline-flex;align-items:center;min-height:38px;padding:0 14px;border:2px solid var(--gold);color:var(--gold);text-decoration:none;font-family:'Silkscreen',monospace;font-size:13px}
 
 @media (max-width:640px){.bar{padding:10px 16px;gap:10px 12px}.who{width:100%}.who>div{min-width:0}.who b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.who span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.switch{width:100%}.switch button{flex:1;justify-content:center}.links{width:100%;justify-content:space-between;gap:10px}}
@@ -430,7 +431,7 @@ button{font:inherit}
     <button type="button" class="p" id="toPlay" aria-pressed="true"><svg width="10" height="12" viewBox="0 0 5 6" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="0" width="2" height="6" fill="currentColor"/><rect x="2" y="1" width="2" height="4" fill="currentColor"/><rect x="4" y="2" width="1" height="2" fill="currentColor"/></svg>Play</button>
     <button type="button" class="b" id="toBoring" aria-pressed="false">Case studies</button>
   </div>
-  <nav class="links"><a href="mailto:diachokvol@gmail.com">Email</a><a href="Volodymyr_Diachok_CV.pdf" download data-cv>Download CV</a><a class="solid" href="https://www.linkedin.com/in/volodymyr-diachok-13128a2b/" target="_blank" rel="noopener">LinkedIn</a></nav>
+  <nav class="links"><a class="home" href="../">Back to portfolio</a><a href="mailto:diachokvol@gmail.com">Email</a><a href="Volodymyr_Diachok_CV.pdf" download data-cv>Download CV</a><a class="solid" href="https://www.linkedin.com/in/volodymyr-diachok-13128a2b/" target="_blank" rel="noopener">LinkedIn</a></nav>
 </header>
 
 <a href="#boring" class="skiplink" onclick="setMode(true);return false">Skip to case studies</a>
