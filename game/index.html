@@ -85,6 +85,9 @@ button{font:inherit}
 
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;padding:10px 24px;background:var(--night);border-bottom:2px solid var(--line);box-shadow:0 2px 0 #0a0616}
 .who{display:flex;align-items:center;gap:12px;min-width:0}
+.home-btn{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:0 14px;margin-right:6px;background:var(--gold);color:var(--ink);box-shadow:inset -3px -3px 0 var(--gold2);font-family:'Silkscreen',monospace;font-size:14px;text-decoration:none;white-space:nowrap}
+.home-btn:hover{filter:brightness(1.08)}
+.home-btn:focus-visible{outline:2px solid var(--cream);outline-offset:2px}
 .who .mark{width:36px;height:36px;flex:none;display:grid;place-items:center;background:var(--gold);color:var(--ink);font-family:'Silkscreen',monospace;font-weight:700;font-size:14px;box-shadow:inset -3px -3px 0 var(--gold2),inset 3px 3px 0 #ffe6a3}
 .who b{display:block;font-family:'Silkscreen',monospace;font-size:16px;letter-spacing:.02em}
 .who span{display:block;font-size:13px;color:var(--muted)}
@@ -95,7 +98,6 @@ button{font:inherit}
 .switch .b{font-size:14px;font-weight:500}
 .links{display:flex;align-items:center;gap:16px}
 .links a{color:var(--cream);font-size:14px;font-weight:500;text-underline-offset:3px}
-.links a.home{padding-right:16px;border-right:1px solid rgba(255,244,220,.25)}
 .links a.solid{display:inline-flex;align-items:center;min-height:38px;padding:0 14px;border:2px solid var(--gold);color:var(--gold);text-decoration:none;font-family:'Silkscreen',monospace;font-size:13px}
 
 @media (max-width:640px){.bar{padding:10px 16px;gap:10px 12px}.who{width:100%}.who>div{min-width:0}.who b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.who span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.switch{width:100%}.switch button{flex:1;justify-content:center}.links{width:100%;justify-content:space-between;gap:10px}}
@@ -426,12 +428,12 @@ button{font:inherit}
 </style>
 
 <header class="bar">
-  <div class="who"><span class="mark" aria-hidden="true">VD</span><div><b>Volodymyr Diachok</b><span>Experience Design Lead &amp; Product Owner · AI-first product design</span></div></div>
+  <div class="who"><a class="home-btn" href="../"><svg width="10" height="12" viewBox="0 0 5 6" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="0" width="2" height="6" fill="currentColor"/><rect x="1" y="1" width="2" height="4" fill="currentColor"/><rect x="0" y="2" width="1" height="2" fill="currentColor"/></svg>Back to portfolio</a><span class="mark" aria-hidden="true">VD</span><div><b>Volodymyr Diachok</b><span>Experience Design Lead &amp; Product Owner · AI-first product design</span></div></div>
   <div class="switch" role="group" aria-label="Site mode">
     <button type="button" class="p" id="toPlay" aria-pressed="true"><svg width="10" height="12" viewBox="0 0 5 6" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="0" width="2" height="6" fill="currentColor"/><rect x="2" y="1" width="2" height="4" fill="currentColor"/><rect x="4" y="2" width="1" height="2" fill="currentColor"/></svg>Play</button>
     <button type="button" class="b" id="toBoring" aria-pressed="false">Case studies</button>
   </div>
-  <nav class="links"><a class="home" href="../">Back to portfolio</a><a href="mailto:diachokvol@gmail.com">Email</a><a href="Volodymyr_Diachok_CV.pdf" download data-cv>Download CV</a><a class="solid" href="https://www.linkedin.com/in/volodymyr-diachok-13128a2b/" target="_blank" rel="noopener">LinkedIn</a></nav>
+  <nav class="links"><a href="mailto:diachokvol@gmail.com">Email</a><a href="Volodymyr_Diachok_CV.pdf" download data-cv>Download CV</a><a class="solid" href="https://www.linkedin.com/in/volodymyr-diachok-13128a2b/" target="_blank" rel="noopener">LinkedIn</a></nav>
 </header>
 
 <a href="#boring" class="skiplink" onclick="setMode(true);return false">Skip to case studies</a>
