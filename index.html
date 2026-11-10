@@ -1380,7 +1380,7 @@ var works = document.getElementById("works");
 WORK.forEach(function(w){
   var b = document.createElement("button");
   b.type="button"; b.className="card"; b.dataset.id=w.id;
-  b.innerHTML = '<div class="ph" style="--bgc:#0c0c0c;--pos:center"><img loading="lazy" src="img/cover_'+w.id+'.webp" alt=""><span class="go"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></div>'+
+  b.innerHTML = '<div class="ph" style="--bgc:#0c0c0c;--pos:center"><img src="img/cover_'+w.id+'.webp" alt="" decoding="async"><span class="go"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></div>'+
     '<div class="tags">'+w.tags+' · <span class="yr">'+w.yr+'</span></div><h3>'+w.title+'</h3>';
   b.addEventListener("click", function(){ openCase(w, b); });
   works.appendChild(b);
@@ -1390,7 +1390,7 @@ WORK.forEach(function(w){
   var g=document.createElement("a");
   g.className="card"; g.href="game/";
   g.setAttribute("aria-label","Portfolio Run: play the game version of this portfolio");
-  g.innerHTML='<div class="ph" style="--bgc:#140c2a;--pos:center"><img loading="lazy" src="img/cover_game.webp" alt=""></div>'+
+  g.innerHTML='<div class="ph" style="--bgc:#140c2a;--pos:center"><img src="img/cover_game.webp" decoding="async" alt=""></div>'+
     '<div class="tags">Playable portfolio · Pixel platformer · <span class="yr">2026</span></div><h3>Portfolio Run</h3>';
   works.appendChild(g);
 })();
@@ -2041,15 +2041,25 @@ document.querySelector(".skip-works").addEventListener("click",function(e){ e.pr
 (function(){ function run(){
   var boot=document.getElementById("boot"), pct=document.getElementById("pct");
   if(reduce || document.visibilityState==="hidden"){ boot.remove(); revealName(); return; }
-  var t0=performance.now(), dur=2400, sigDone=false, mp=boot.querySelectorAll(".bsig mask path"), lastP=mp[mp.length-1];
+  var t0=performance.now(), dur=2400, cap=9000, sigDone=false, mp=boot.querySelectorAll(".bsig mask path"), lastP=mp[mp.length-1];
   if(lastP) lastP.addEventListener("animationend",function(){ setTimeout(function(){ sigDone=true; },280); }); else sigDone=true;
+  // warm the cache while the signature writes: portrait, logos, scene maps, work covers (+ scene data on desktop)
+  var src=document.documentElement.innerHTML, urls={};
+  (src.match(/img\/x\/[0-9a-f]+\.(?:webp|jpg)/g)||[]).forEach(function(u){ urls[u]=1; });
+  (window.WORK||[]).forEach(function(w){ urls["img/cover_"+w.id+".webp"]=1; }); urls["img/cover_game.webp"]=1;
+  var list=Object.keys(urls), total=list.length, got=0, shown=0;
+  function one(){ got++; }
+  list.forEach(function(u){ var im=new Image(); im.onload=im.onerror=one; im.src=u; });
+  if(matchMedia("(min-width:821px)").matches){ total++; var l=document.createElement("link"); l.rel="preload"; l.as="script"; l.href="data/scenes.js"; l.onload=l.onerror=one; document.head.appendChild(l); }
   (function tick(t){
-    var p=Math.min(1,(t-t0)/dur), e=1-Math.pow(1-p,3);
-    pct.textContent=Math.round(e*100);
-    if(p<1||!sigDone) requestAnimationFrame(tick);
+    var el=t-t0, tp=Math.min(1,el/dur), lp=total?got/total:1;
+    // the counter follows real downloads, eased, and never runs ahead of the signature
+    var target=Math.min(1-Math.pow(1-tp,3), el>cap?1:lp); shown+=(target-shown)*.12; if(target>=1&&shown>.995) shown=1;
+    pct.textContent=Math.round(shown*100);
+    if(shown<1||!sigDone) requestAnimationFrame(tick);
     else { boot.classList.add("gone"); setTimeout(revealName,520); setTimeout(function(){boot.remove();},1300); }
   })(t0);
-  setTimeout(function(){ if(boot.isConnected){boot.classList.add("gone"); revealName();} }, 7000);
+  setTimeout(function(){ if(boot.isConnected){boot.classList.add("gone"); revealName();} }, cap+2500);
  } if(window.__locked) window.__onUnlock=run; else run();
 })();
 
