@@ -85,8 +85,7 @@ button{font:inherit}
 
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px;padding:10px 24px;background:var(--night);border-bottom:2px solid var(--line);box-shadow:0 2px 0 #0a0616}
 .who{display:flex;align-items:center;gap:12px;min-width:0}
-.home-btn{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:0 14px;margin-right:6px;background:var(--gold);color:var(--ink);box-shadow:inset -3px -3px 0 var(--gold2);font-family:'Silkscreen',monospace;font-size:14px;text-decoration:none;white-space:nowrap}
-.home-btn:hover{filter:brightness(1.08)}
+.home-btn{flex:none;display:inline-flex;align-items:center;min-height:38px;padding:0 14px;border:2px solid var(--gold);color:var(--gold);text-decoration:none;font-family:'Silkscreen',monospace;font-size:13px;white-space:nowrap}
 .home-btn:focus-visible{outline:2px solid var(--cream);outline-offset:2px}
 .who .mark{width:36px;height:36px;flex:none;display:grid;place-items:center;background:var(--gold);color:var(--ink);font-family:'Silkscreen',monospace;font-weight:700;font-size:14px;box-shadow:inset -3px -3px 0 var(--gold2),inset 3px 3px 0 #ffe6a3}
 .who b{display:block;font-family:'Silkscreen',monospace;font-size:16px;letter-spacing:.02em}
@@ -428,7 +427,7 @@ button{font:inherit}
 </style>
 
 <header class="bar">
-  <div class="who"><a class="home-btn" href="../"><svg width="10" height="12" viewBox="0 0 5 6" shape-rendering="crispEdges" aria-hidden="true"><rect x="3" y="0" width="2" height="6" fill="currentColor"/><rect x="1" y="1" width="2" height="4" fill="currentColor"/><rect x="0" y="2" width="1" height="2" fill="currentColor"/></svg>Back to portfolio</a></div>
+  <div class="who"><a class="home-btn" href="../">To Portfolio</a></div>
   <div class="switch" role="group" aria-label="Site mode">
     <button type="button" class="p" id="toPlay" aria-pressed="true"><svg width="10" height="12" viewBox="0 0 5 6" shape-rendering="crispEdges" aria-hidden="true"><rect x="0" y="0" width="2" height="6" fill="currentColor"/><rect x="2" y="1" width="2" height="4" fill="currentColor"/><rect x="4" y="2" width="1" height="2" fill="currentColor"/></svg>Play</button>
     <button type="button" class="b" id="toBoring" aria-pressed="false">Case studies</button>
