@@ -1404,7 +1404,9 @@ WORK.forEach(function(w){
   function pick(x,y){ var el=document.elementFromPoint(x,y); if(!el||el.closest("#zoomv")) return null;
     // inside a project page only the titles react; body copy, meta and captions stay clean
     if(el.closest("#case")){ var tt=el.closest(".cs-l h3,.cs-next b,.vscene h4,.cs-stat")||el.closest(".cs-card,.vscene"); return tt||null; }
-    var t=el.closest(SEL); if(!t||t.closest("#boot,#grain,canvas")) return null; return t; }
+    var t=el.closest(SEL); if(!t||t.closest("#boot,#grain,canvas")) return null;
+    // big titles are a stack of blurred copies: shift the whole stack so the blurred part moves too (text-shadow inherits)
+    var g=t.closest(".gt-w"); return g||t; }
   function isImg(el){ return el.tagName==="IMG"||el.classList.contains("ph")||el.classList.contains("cs-card")||el.classList.contains("vscene"); }
   addEventListener("pointermove",function(e){
     vx=vx*.5+(e.clientX-lx)*.5; vy=vy*.5+(e.clientY-ly)*.5; lx=e.clientX; ly=e.clientY;
